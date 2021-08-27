@@ -1,4 +1,4 @@
-# Procedure
+# Initial procedure
 ## Package creation
 
 ```shell
@@ -9,7 +9,7 @@ $ mkdir <package>/msg
 $ mkdir <package>/srv
 ```
 
-## Modified package.xml
+## Editing package.xml
 Excerpt related parts.
 
 ```xml
@@ -19,7 +19,7 @@ Excerpt related parts.
   <member_of_group>rosidl_interface_packages</member_of_group>
 ```
 
-## Modified CMakeLists.txt
+## Editing CMakeLists.txt
 Excerpt related parts.
 
 ```txt
@@ -36,4 +36,6 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 ament_export_dependencies(rosidl_default_runtime)
 ```
 
-Add file name in `set(*_files)` when making msg or srv files.
+# Procedure in production
+## Adding message file
+Add file name in parentheses of `set(msg_files )` or `set(srv_files )` in CMakeLists.txt when making msg or srv files.

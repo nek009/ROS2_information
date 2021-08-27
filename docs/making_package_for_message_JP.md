@@ -1,4 +1,4 @@
-# 手順
+# 初期手順
 ## パッケージの作成
 
 ```shell
@@ -36,4 +36,6 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 ament_export_dependencies(rosidl_default_runtime)
 ```
 
-msgファイルやsrvファイルを作成したら`set(*_files)`の中に追加．
+# パッケージ製作時の手順
+## メッセージファイルの追加
+msgファイルやsrvファイルを作成したらCMakeLists.txt中の`set(msg_files )`や`set(srv_files )`の中にファイル名を追加．
