@@ -18,4 +18,4 @@
 
 # Information
 
-1. [メッセージ用のパッケージ作成手順](docs/procedure_for_creation_of_package_for_message_JP.md)
+1. [メッセージ用のパッケージ作成手順](docs/making_package_for_message_JP.md)

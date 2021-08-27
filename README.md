@@ -20,4 +20,4 @@ Basicall each term encloses in `< >`.
 
 # Information
 
-1. [Procedure for creation of pacakge for message](docs/procedure_for_creation_of_package_for_message.md)
+1. [Making package for message](docs/making_package_for_message.md)
