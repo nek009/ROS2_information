@@ -19,6 +19,9 @@ Basicall each term encloses in `< >`.
   * a name of workspace
 * \<package\>
   * a name of package
+  * \<package\>_msgs : package for message
+  * \<package\>_node : package for node
+  * \<package\>_target : package for executable
 
 # Information
 

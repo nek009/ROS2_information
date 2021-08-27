@@ -15,6 +15,9 @@
   * a name of workspace
 * \<package\>
   * a name of package
+  * \<package\>_msgs : message用
+  * \<package\>_node : node用
+  * \<package\>_target : 実行可能形式なもの用
 
 # Information
 

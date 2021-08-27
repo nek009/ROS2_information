@@ -26,8 +26,10 @@ Excerpt related parts.
 find_package(rosidl_default_generators REQUIRED)
 
 set(msg_files
+#  "msg/<file name>"
 )
 set(srv_files
+#  "srv/<file name>"
 )
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
