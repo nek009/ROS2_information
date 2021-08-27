@@ -22,7 +22,10 @@ Basicall each term encloses in `< >`.
   * \<package\>_msgs : package for message
   * \<package\>_node : package for node
   * \<package\>_target : package for executable
+* \<node_name\>
+  * a name of node
 
 # Information
 
 1. [Making package for message](docs/making_package_for_message.md)
+1. [Making package of component node](docs/making_package_of_component_node.md)

@@ -18,7 +18,10 @@
   * \<package\>_msgs : message用
   * \<package\>_node : node用
   * \<package\>_target : 実行可能形式なもの用
+* \<node_name\>
+  * ノードの名前
 
 # Information
 
 1. [メッセージ用のパッケージ作成手順](docs/making_package_for_message_JP.md)
+1. [コンポーネントノードのパッケージ作成手順](docs/making_package_of_component_node_JP.md)
