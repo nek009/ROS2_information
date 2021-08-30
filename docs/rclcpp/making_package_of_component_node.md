@@ -50,8 +50,13 @@ endif()
 
 ## Editing header file
 ### Outline
+* Inherit `rclcpp::Node`
 * Set macro `<PACKAGE>_PUBLIC` for all symbols you want to export.
 * Prepare plural constructor for a use as component and as normal.
+
+### Making a class a inheritance of a node class
+A node created by the option `--library-name` is not a inheritance of `rclcpp::Node`.
+So you must make it inherit the class.
 
 ### Setting macro
 The macro to build libraries on windows is prepared.
