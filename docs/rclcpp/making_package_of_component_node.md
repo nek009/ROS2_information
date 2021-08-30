@@ -49,6 +49,7 @@ endif()
 ```
 
 ## Editing header file
+### Outline
 * Set macro `<PACKAGE>_PUBLIC` for all symbols you want to export.
 * Prepare plural constructor for a use as component and as normal.
 
