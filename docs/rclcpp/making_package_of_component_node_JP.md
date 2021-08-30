@@ -22,7 +22,7 @@ $ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcp
 ```txt
 # For <package>
 target_compile_options(<package>
-  PUBLIC -Wall -pthread
+  PUBLIC -Wall
 )
 rclcpp_components_register_nodes(<package>
   "namespace::クラス名" # イコール <package> "<package>::<LIBRARY_NAME>"

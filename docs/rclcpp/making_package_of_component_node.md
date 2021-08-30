@@ -21,7 +21,7 @@ Excerpt related parts.
 ```txt
 # For <package>
 target_compile_options(<package>
-  PUBLIC -Wall -pthread
+  PUBLIC -Wall
 )
 rclcpp_components_register_nodes(<package>
   "namespace::classname" # equal <package> "<package>::<LIBRARY_NAME>"
