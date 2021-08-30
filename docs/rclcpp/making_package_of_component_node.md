@@ -55,7 +55,7 @@ endif()
 * Prepare plural constructor for a use as component and as normal.
 
 ### Making a class a inheritance of a node class
-A node created by the option `--library-name` is not a inheritance of `rclcpp::Node`.
+A node created by the option `--library-name` is not a inheritance of `rclcpp::Node` and no include file about it, `rclcpp/rclcpp.hpp`.
 So you must make it inherit the class.
 
 ### Setting macro
@@ -70,6 +70,8 @@ So two types of constructors are prepared, one is for as a component and another
 Header becomes as follows.
 
 ```c++
+#include <rclcpp/rclcpp.hpp>
+
 namespace \<package> {
 
 class <LIBRARY_NAME> : rclcpp::Node{
@@ -95,6 +97,8 @@ Following is an example that \<package\>: `test_package`, \<library_name\>: `tes
 Notice that `_` is deleted when \<LIBRARY_NAME\> is used as a class name.
 
 ```c++
+#include <rclcpp/rclcpp.hpp>
+
 namespace test_package {
 
 class TestPackageNode : rclcpp::Node{

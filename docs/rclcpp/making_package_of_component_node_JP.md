@@ -55,7 +55,7 @@ endif()
 * コンポーネント用と普通のノード用の使用を考え，複数のコンストラクタを用意
 
 ### 対象を継承クラスに変更
-`--library-name`オプションを使用すると，作成されるクラスは`rclcpp::Node`を継承しないので継承するように変更する．
+`--library-name`オプションを使用すると，作成されるクラスは`rclcpp::Node`を継承せず`rclcpp/rclcpp.hpp`をインクルードしないので継承するように変更する．
 
 ### マクロの設定
 マクロ `<PACKAGE>_PUBLIC` はvisibility_control.hの中で定義されていて，windowsのために用意されている．
@@ -69,6 +69,8 @@ endif()
 最終的にヘッダファイルは以下のようになる．
 
 ```c++
+#include <rclcpp/rclcpp.hpp>
+
 namespace \<package> {
 
 class <LIBRARY_NAME> : rclcpp::Node{
@@ -94,6 +96,8 @@ private:
 ライブラリ名がクラス名として利用される時には，大文字にした上で`_`が削除されていることに注意する．
 
 ```c++
+#include <rclcpp/rclcpp.hpp>
+
 namespace test_package {
 
 class TestPackageNode : rclcpp::Node{
