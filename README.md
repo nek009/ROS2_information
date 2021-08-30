@@ -27,5 +27,5 @@ Basicall each term encloses in `< >`.
 
 # Information
 
-1. [Making package for message](docs/making_package_for_message.md)
-1. [Making package of component node](docs/making_package_of_component_node.md)
+1. [Making package for message](docs/rclcpp/making_package_for_message.md)
+1. [Making package of component node](docs/rclcpp/making_package_of_component_node.md)

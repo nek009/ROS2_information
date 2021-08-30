@@ -1,7 +1,7 @@
-[Topページへ](../README_JP.md)
+[Back to Top page](../../README.md)
 
-# 初期手順
-## パッケージの作成
+# Initial procedure
+## Package creation
 
 ```shell
 $ colcon_cd
@@ -11,8 +11,8 @@ $ mkdir <package>/msg
 $ mkdir <package>/srv
 ```
 
-## package.xmlの編集
-関係部分のみ抜粋
+## Editing package.xml
+Excerpt related parts.
 
 ```xml
 <package format="3">
@@ -21,8 +21,8 @@ $ mkdir <package>/srv
   <member_of_group>rosidl_interface_packages</member_of_group>
 ```
 
-## CMakeLists.txtの編集
-関係部分のみ抜粋
+## Editing CMakeLists.txt
+Excerpt related parts.
 
 ```txt
 find_package(rosidl_default_generators REQUIRED)
@@ -40,6 +40,6 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 ament_export_dependencies(rosidl_default_runtime)
 ```
 
-# パッケージ製作時の手順
-## メッセージファイルの追加
-msgファイルやsrvファイルを作成したらCMakeLists.txt中の`set(msg_files )`や`set(srv_files )`の中にファイル名を追加．
+# Procedure in production
+## Adding message file
+Add file name in parentheses of `set(msg_files )` or `set(srv_files )` in CMakeLists.txt when making msg or srv files.

@@ -1,4 +1,4 @@
-[Back to Top page](../README.md)
+[Back to Top page](../../README.md)
 
 A component node is a kind of a usual node, a shared libray.
 So basically I make a component node, not a usual node or a sahred library.
