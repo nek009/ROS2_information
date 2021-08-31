@@ -25,3 +25,4 @@
 
 1. [メッセージ用のパッケージ作成手順](docs/rclcpp/making_package_for_message_JP.md)
 1. [コンポーネントノードのパッケージ作成手順](docs/rclcpp/making_package_of_component_node_JP.md)
+1. [serviceノードの作成手順](docs/rclcpp/making_package_of_service_node_JP.md)
