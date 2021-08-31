@@ -51,7 +51,7 @@ private:
   // Added below
   rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;
   // Added below
-  void handleSrv_(
+  void handle_srv_(
     const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> request,
     const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> response
   );
@@ -84,7 +84,7 @@ public:
 namespace srv_pkg{
 
 // Added below
-void SrvTestNode::handleSrv_(
+void SrvTestNode::handle_srv_(
   const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> request,
   const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> response
 ){
@@ -106,7 +106,7 @@ SrvTestNode::SrvTestNode(
   using namespace std::placeholders;
   srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(
     "srv_test", // service name
-    std::bind(&SrvTestNode::handleSrv_, this, _1, _2)
+    std::bind(&SrvTestNode::handle_srv_, this, _1, _2)
   );
 
 }
