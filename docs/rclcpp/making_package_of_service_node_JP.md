@@ -1,192 +1,117 @@
 [Topページへ](../../README_JP.md)
 
-コンポーネントノードは普通のノードでもあり共有ライブラリでもある．
-基本的には，普通のノードや共有ライブラリを作成するのではなく，コンポーネントノードを作成する．
-その上で，状況に合わせて普通のノードとして使用したり使い分ける．
+ここではserviceノードを作成する方法を紹介する．
+コンポーネントに追加する形で説明しているので，[making_package_of_component_node.md](making_package_of_service_node.md)を見てコンポーネントノードを作成しておくこと．
 
 # 初期手順
-## パッケージの作成
+以下の名前を例として用いる．
 
-```shell
-$ colcon_cd
-$ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_msgs --library-name <node_name>
-```
+* 対象パッケージ(\<package_name\>)
+  * srv_pkg
+* 対象クラス(\<NODE_NAME\>)
+  * SrvTest
+* 使用メッセージ(\<package\>_msgs/srv/\<srv file\>)
+  * msg_test_msgs/srv/MsgTest.srv
+    * `int a`
+    * `---`
+    * `int b`
 
-通常メッセージはROS2の重要な特徴なのでコーディングで使用する．
-そこで，すでにメッセージ用のパッケージを作成しており名前が確定しているなら，`--dependencies`に追加しておく．
+## serviceノードのコーディングの流れ
 
-## CMakeLists.txtの編集
-関係部分のみ抜粋
+**In header**
 
-```txt
-# For <package>
-target_compile_options(<package>
-  PUBLIC -Wall
-)
-rclcpp_components_register_nodes(<package>
-  "namespace::クラス名" # イコール <package> "<package>::<LIBRARY_NAME>"
-)
+1. メッセージに関するヘッダファイルをインクルード
+  * `#include "mgs_test_msgs/srv/msg_test.hpp"`
+1. サービスを維持するための変数の宣言
+  * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
+1. サービスの中身となるコールバック関数を宣言
+  * `void handlSrv_(*1,*2);`
+    * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
+    * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
 
-# For all packages
-ament_export_targets(
-# オリジナル
-#   export_${PROJECT_NAME}
-# オリジナルに HAS_LIBRARY_TARGET を追加
-  export_${PROJECT_NAME} HAS_LIBRARY_TARGET
-)
+**In cpp**
 
-ament_export_dependencies(
-  # ament_target_dependenciesを見ながらexportしたいものを追加
-  # 簡単な方法はament_target_dependenciesをコピー
-)
+1. このクラス・使用メッセージのヘッダファイルのインクルード
+1. コールバック関数の実装
+1. サービス名とコールバック関数の登録
+  * `srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(<service name>, a function);`
 
-if(NOT WIN32)
-  ament_environment_hooks(
-    "${ament_cmake_package_templates_ENVIRONMENT_HOOK_LIBRARY_PATH}"
-  )
-endif()
-```
-
-## ヘッダファイルの編集
-### 概要
-* `rclcpp::Node`クラスの継承
-* 外部公開用にマクロ`<PACKAGE>_PUBLIC`の設定
-* コンポーネント用と普通のノード用の使用を考え，複数のコンストラクタを用意
-
-### 対象を継承クラスに変更
-`--library-name`オプションを使用すると，作成されるクラスは`rclcpp::Node`を継承せず`rclcpp/rclcpp.hpp`をインクルードしないので継承するように変更する．
-
-### マクロの設定
-マクロ `<PACKAGE>_PUBLIC` はvisibility_control.hの中で定義されていて，windowsのために用意されている．
-このマクロはヘッダファイルの中で使用し，外部に公開したいシンボル(関数などなど)に設定する．
-
-### For constructor with namespace
-コンポーネントノードのコンストラクタは引数を一つ(rclcpp::NodeOptions)しか持てない．
-普通のノードとしても使用したい場合，複数のコンストラクタを用意して対応する．
-
-### ヘッダファイルとその例
-最終的にヘッダファイルは以下のようになる．
+## コーディング例
+追加したところに`// Added below`のコメントを追加しているので参考に．
 
 ```c++
 #include <rclcpp/rclcpp.hpp>
+// Added below
+#include "msg_test_msgs/srv/msg_test.hpp"
 
-namespace \<package> {
+namespace srv_pkg{
 
-class <LIBRARY_NAME> : rclcpp::Node{
-public:
-  <PACKAGE>_PUBLIC
-  <LIBRARY_NAME>( // constructor for component
-    const rclcpp::NodeOptions& options=rclcpp::NodeOptions()
-  );
-  <LIBRARY_NAME>( // constructor for non-component
-    const std::string& name_space,
-    const rclcpp::NodeOptions& options=rclcpp::NodeOptions()
-  );
-  <PACKAGE>_PUBLIC
-  virtual ~<LIBRARY_NAME>(); // destructor
+class SrvTest : public rclcpp::Node{
 private:
-  void hoge(); // macro is not need for non-public
+  // Added below
+  rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;
+  // Added below
+  void handleSrv_(
+    const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> request,
+    const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> response
+  );
+
+public:
+  SRV_PKG_PUBLIC
+  SrvTestNode(
+    const rclcpp::NodeOptions& options = rclcpp::NodeOptions()
+  );
+  SRV_PKG_PUBLIC
+  SrvTestNode(
+    const std::string& name_space,
+    const rclcpp::NodeOptions& options = rclcpp::NodeOptions()
+  );
+  SRV_PKG_PUBLIC
+  ~virtual SrvTestNode();
 };
 
-}
+} // end of namespace
 ```
-
-パッケージ名(\<package\>)を`test_package`，ライブラリ名(\<library_name\>)を`test_pacakge_node`とした場合の例は以下のようになる．
-ライブラリ名がクラス名として利用される時には，大文字にした上で`_`が削除されていることに注意する．
 
 ```c++
 #include <rclcpp/rclcpp.hpp>
-
-namespace test_package {
-
-class TestPackageNode : rclcpp::Node{
-public:
-  TEST_PACKAGE_PUBLIC
-  TestPackageNode( // constructor for component
-    const rclcpp::NodeOptions& options=rclcpp::NodeOptions()
-  );
-  TestPackageNode( // constructor for non-component
-    const std::string& name_space,
-    const rclcpp::NodeOptions& options=rclcpp::NodeOptions()
-  );
-  TEST_PACKAGE_PUBLIC
-  virtual ~TestPackageNode(); // destructor
-private:
-  void hoge(); // macro is not need for non-public
-};
-
-}
-```
-
-## ソースコードの編集
-
-* `#include "rclcpp_components/register_node_macro.hpp"`の追加
-* `RCLCPP_COMPONENTS_REGISTER_NODE(namespace::class name)`をファイルの最後に追加
-  * namespaceの外側に書くこと！
-
-以下はパッケージ名(\<package\>)を`test_package`，ライブラリ名(\<library_name\>)を`test_pacakge_node`とした時の例である．
-
-```c++
-#include <rclcpp/rclcpp.hpp>
-...
 #include "rclcpp_components/register_node_macro.hpp"
+// Added below
+#include "srv_pkg/srv_test.hpp"
+// Added below
+#include "msg_test_msgs/srv/msg_test.hpp"
 
-namespace test_package {
+namespace srv_pkg{
 
-TestPackageNode::TestPackageNode(
+// Added below
+void SrvTestNode::handleSrv_(
+  const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> request,
+  const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> response
+){
+  // basic access to a message
+  int a = request->a;
+  response->b = a*2;
+}
+
+SrvTestNode::SrvTestNode(
   const rclcpp::NodeOptions& options
-): TestPackageNode("",options){}
+): SrvTestNode("",options){}
 
-TestPackageNode::TestPackageNode(
+SrvTestNode::SrvTestNode(
   const std::string& name_space,
   const rclcpp::NodeOptions& options
-): Node("test_package_node","",options){
-  ...
+): Node("srv_test_node","",options){
+
+  // Added below
+  using namespace std::placeholders;
+  srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(
+    "srv_test", // service name
+    std::bind(&SrvTestNode::handleSrv_, this, _1, _2)
+  );
+
 }
 ...
 
 } // end of namespace
-RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
-```
-
-# パッケージ製作時の手順
-## 使用するメッセージ用のパッケージを追加
-
-**package.xml**
-
-```xml
-<package format="3">
-  <build><package_of_message>_msgs</build>
-```
-
-**CMakeLists.txt**
-
-```txt
-find_package(<package_of_message>_msgs REQUIRED)
-
-ament_target_dependencies(<package>
-  ...
-  <package_of_message>_msgs
-)
-
-ament_export_dependencies(
-  ...
-  <package_of_message>_msgs
-)
-```
-
-## コンパイルオプションやリンカーの設定
-`target_compile_options`や`target_link_libraries`を使って設定する．
-以下の例では，コンパイルオプションとして`-Wall -pthread`をリンカーとして`-lpigpiod_if2`を使用する場合である．
-
-**CMakeLists.txt**
-
-```text
-target_compile_options(<package>
-  PUBLIC -Wall -pthread
-)
-target_link_libraries(<package>
-  pigpiod_if2
-)
+RCLCPP_COMPONENTS_REGISTER_NODE(srv_pkg::SrvTestNode)
 ```
