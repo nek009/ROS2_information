@@ -21,20 +21,20 @@
 **In hpp files**
 
 1. メッセージに関するヘッダファイルをインクルード
-  * `#include "mgs_test_msgs/srv/msg_test.hpp"`
+   * `#include "mgs_test_msgs/srv/msg_test.hpp"`
 1. サービスを維持するための変数の宣言
-  * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
+   * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
 1. サービスの中身となるコールバック関数を宣言
-  * `void handlSrv_(*1,*2);`
-    * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
-    * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
+   * `void handlSrv_(*1,*2);`
+     * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
+     * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
 
 **In cpp files**
 
 1. このクラス・使用メッセージのヘッダファイルのインクルード
 1. コールバック関数の実装
 1. サービス名とコールバック関数の登録
-  * `srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(<service name>, a function);`
+   * `srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(<service name>, a function);`
 
 ## コーディング例
 追加したところに`// Added below`のコメントを追加しているので参考に．

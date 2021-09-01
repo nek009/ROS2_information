@@ -14,16 +14,16 @@ I explain terms or names of them roughly at each part, or there are few explanat
 
 **In hpp files**
 1. Declare callback function(s) for changes of parameters
-  * No need if lambda functions are used.
-  * No need if no special procedures for changes of parameters
+   * No need if lambda functions are used.
+   * No need if no special procedures for changes of parameters
 
 **In cpp files**
 
 1. Use ParameterDescriptor
-  * For detailed setting of parameters. No need if no detailed setting.
+   * For detailed setting of parameters. No need if no detailed setting.
 1. Declare parameters
 1. Define callback function(s) for changes of parameters
-  * No need if no special procedures for changes of parameters
+   * No need if no special procedures for changes of parameters
 1. Use Parameter
 
 **yaml files**

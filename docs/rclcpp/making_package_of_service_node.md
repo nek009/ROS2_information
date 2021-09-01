@@ -23,20 +23,20 @@ And following terms are used as example.
 **In hpp files**
 
 1. Include message
-  * `#include "mgs_test_msgs/srv/msg_test.hpp"`
+   * `#include "mgs_test_msgs/srv/msg_test.hpp"`
 1. Declare a variable to keep a service
-  * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
+   * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
 1. Declare a callback function which shows a content of a service
-  * `void handlSrv_(*1,*2);`
-    * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
-    * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
+   * `void handlSrv_(*1,*2);`
+     * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
+     * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
 
 **In cpp files**
 
 1. Include hpp, message
 1. Define a callback function
 1. Register a service name and a callback function with srv_
-  * `srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(<service name>, a function);`
+   * `srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(<service name>, a function);`
 
 ## Example of coding
 Added comments `// Added below` at the point to be noticed.

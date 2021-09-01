@@ -12,22 +12,22 @@
 **In hpp file**
 
 1. パラメータ変更に対するコールバック関数の宣言
-  * lambda関数を使用する場合不必要．
-  * パラメータ変更に対する特段の処理がない場合不必要
+   * lambda関数を使用する場合不必要．
+   * パラメータ変更に対する特段の処理がない場合不必要
 
 **In cpp file**
 
 1. ParameterDescriptorの使用
-  * 細かいパラメータ設定で使用．もし細かく設定しないなら不必要．
+   * 細かいパラメータ設定で使用．もし細かく設定しないなら不必要．
 1. パラメータの宣言
 1. パラメータ変更に対するコールバック関数の実装
 1. パラメータの使用
 
 1. Use ParameterDescriptor
-  * For detailed setting of parameters. No need if no detailed setting.
+   * For detailed setting of parameters. No need if no detailed setting.
 1. Declare parameters
 1. Define callback function(s) for changes of parameters
-  * パラメータ変更に対する特段の処理がない場合不必要
+   * パラメータ変更に対する特段の処理がない場合不必要
 1. Use Parameter
 
 **yaml files**
