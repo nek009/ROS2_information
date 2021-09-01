@@ -9,7 +9,7 @@
 * 対象パッケージ(\<package_name\>)
   * srv_pkg
 * 対象クラス(\<NODE_NAME\>)
-  * SrvTest
+  * SrvTestNode
 * 使用メッセージ(\<package\>_msgs/srv/\<srv file\>)
   * msg_test_msgs/srv/MsgTest.srv
     * `int a`
@@ -18,7 +18,7 @@
 
 ## serviceノードのコーディングの流れ
 
-**In header**
+**In hpp files**
 
 1. メッセージに関するヘッダファイルをインクルード
   * `#include "mgs_test_msgs/srv/msg_test.hpp"`
@@ -29,7 +29,7 @@
     * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
     * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
 
-**In cpp**
+**In cpp files**
 
 1. このクラス・使用メッセージのヘッダファイルのインクルード
 1. コールバック関数の実装
@@ -46,7 +46,7 @@
 
 namespace srv_pkg{
 
-class SrvTest : public rclcpp::Node{
+class SrvTestNode : public rclcpp::Node{
 private:
   // Added below
   rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;
@@ -76,7 +76,7 @@ public:
 ```c++
 #include <rclcpp/rclcpp.hpp>
 #include "rclcpp_components/register_node_macro.hpp"
-#include "srv_pkg/srv_test.hpp"
+#include "srv_pkg/srv_test_node.hpp"
 // Added below
 #include "msg_test_msgs/srv/msg_test.hpp"
 
