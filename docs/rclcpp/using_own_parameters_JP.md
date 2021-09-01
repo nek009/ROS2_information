@@ -66,9 +66,9 @@ namespace param_pkg{
 class ParamTestNode : public rclcpp::Node{
 private:
   // Added below
-  OnSetParametersCallbackHandle::SharedPtr my_param_callback_function_handler_;
+  OnSetParametersCallbackHandle::SharedPtr reset_param_callback_function_handler_;
   rcl_interfaces::msg::SetParametersResult
-    my_param_callback_function_(const std::vector<rclcpp::Parameter>& params);
+    reset_param_callback_function_(const std::vector<rclcpp::Parameter>& params);
 
 public:
   PARAM_PKG_PUBLIC
@@ -123,8 +123,8 @@ ParamTestNode::ParamTestNode(
 
   using namespace std::placeholders;
   // Register callback function
-  my_param_callback_function_handler_ = this->add_on_set_parameters_callback(
-    std::bind(&ParamTestNode::my_param_callback_function_, this, _1)
+  reset_param_callback_function_handler_ = this->add_on_set_parameters_callback(
+    std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
   );
   //Use parameter
   auto a1 = this->get_parameter("param1").as_int();
@@ -145,7 +145,7 @@ ParamTestNode::ParamTestNode(
 // Added below
 // Define callback function
 rcl_interfaces::msg::SetParametersResult
-ParamTestNode::my_param_callback_function_(const std::vector<rclcpp::Parameter>& params){
+ParamTestNode::reset_param_callback_function_(const std::vector<rclcpp::Parameter>& params){
   auto results = std::make_shared<rcl_interface::msg::SetParametersResult>();
   results->successful = true;
   results->reason="";
