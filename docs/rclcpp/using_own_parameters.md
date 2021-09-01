@@ -101,7 +101,7 @@ ParamTestNode::ParamTestNode(
 
   // Added below
   // Use ParameterDescriptor
-  rcl_interface::msg::ParameterDescriptor descriptor;
+  rcl_interfaces::msg::ParameterDescriptor descriptor;
   descriptor.read_only = true; // set read only
 
   // Declare parameters
@@ -142,14 +142,14 @@ ParamTestNode::ParamTestNode(
 // Define callback function
 rcl_interfaces::msg::SetParametersResult
 ParamTestNode::reset_param_callback_function_(const std::vector<rclcpp::Parameter>& params){
-  auto results = std::make_shared<rcl_interface::msg::SetParametersResult>();
+  auto results = std::make_shared<rcl_interfaces::msg::SetParametersResult>();
   results->successful = true;
   results->reason="";
 
   for(auto&& param : params){
     // recogize param, process it.
     if(param.get_name() == "param1"){
-      double tmp = param.as_double();
+      auto tmp = param.as_double();
       // process something what you want.
     }else if(param.get_name() == "param2"){
       if(/* something to be wrong */){
@@ -205,9 +205,9 @@ So callback functions must be defined as follows.
 * arguments
   * const std::vector\<rclcpp::Parameter\>&
 * return value
-  * rcl_interface::msg::SetParametersResult
+  * rcl_interfaces::msg::SetParametersResult
 
-`rcl_interface::msg::SetParametersResult` has two attributes as follows.
+`rcl_interfaces::msg::SetParametersResult` has two attributes as follows.
 
 * bool successful
   * result of setting of parameters
@@ -249,7 +249,7 @@ And declare parameters with it.
 ```c++
 // In constructor
   ...
-  rcl_interface::msg::ParameterDescriptor descriptor;
+  rcl_interfaces::msg::ParameterDescriptor descriptor;
   descriptor.read_only = true; // set read only
   descriptor.integer_range.resize(1);
   auto& range = descriptor.integer_range.at(0);
@@ -265,7 +265,7 @@ attributes are as follows.
 * string name
   * the name of parameter
 * uint8 type
-  * usable type is written in [rcl_interface::msg::ParameterType.msg](https://github.com/ros2/rcl_interfaces/blob/master/rcl_interfaces/msg/ParameterType.msg)
+  * usable type is written in [rcl_interfaces::msg::ParameterType.msg](https://github.com/ros2/rcl_interfaces/blob/master/rcl_interfaces/msg/ParameterType.msg)
 * string description
   * like memo
 string additional_constraints
@@ -296,6 +296,9 @@ The examples are in the case of FloatingPointRange, the same is in the case of I
   * valid values: {1.0, 1.8, 2.0}
 * from_value=1.0, to_value=2.0,step=3.0
   * valid values: {1.0, 2.0}
+* from_value=1.0, step=0.5
+  * valid values : {1.0, 0.5, 0.0}
+  * no setting become setting it `0`?
 
 ## Gouping parameters
 An following example is in yaml file.

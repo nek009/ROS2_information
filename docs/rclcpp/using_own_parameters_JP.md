@@ -153,7 +153,7 @@ ParamTestNode::reset_param_callback_function_(const std::vector<rclcpp::Paramete
   for(auto&& param : params){
     // recogize param, process it.
     if(param.get_name() == "param1"){
-      double tmp = param.as_double();
+      auto tmp = param.as_double();
       // process something what you want.
     }else if(param.get_name() == "param2"){
       if(/* something to be wrong */){
@@ -301,6 +301,11 @@ string additional_constraints
   * 有効な値 : {1.0, 1.8, 2.0}
 * from_value=1.0, to_value=2.0,step=3.0
   * 有効な値 : {1.0, 2.0}
+* from_value=1.0, to_value=0.0,step=0.5
+  * 有効な値 : {1.0, 0.5, 0.0}
+* from_value=1.0, step=0.5
+  * 有効な値 : {1.0, 0.5, 0.0}
+  * 設定しないと'0'になる？
 
 ## バラメータのグループ化
 yamlファイル例で紹介する．
