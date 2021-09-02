@@ -105,7 +105,7 @@ ParamTestNode::ParamTestNode(
 
   // Added below
   // Use ParameterDescriptor
-  rcl_interface::msg::ParameterDescriptor descriptor;
+  rcl_interfaces::msg::ParameterDescriptor descriptor;
   descriptor.read_only = true; // set read only
 
   // Declare parameters
@@ -146,7 +146,7 @@ ParamTestNode::ParamTestNode(
 // Define callback function
 rcl_interfaces::msg::SetParametersResult
 ParamTestNode::reset_param_callback_function_(const std::vector<rclcpp::Parameter>& params){
-  auto results = std::make_shared<rcl_interface::msg::SetParametersResult>();
+  auto results = std::make_shared<rcl_interfaces::msg::SetParametersResult>();
   results->successful = true;
   results->reason="";
 
@@ -211,9 +211,9 @@ using OnParametersSetCallbackType =
 * 引数
   * const std::vector\<rclcpp::Parameter\>&
 * 返り値
-  * rcl_interface::msg::SetParametersResult
+  * rcl_interfaces::msg::SetParametersResult
 
-また`rcl_interface::msg::SetParametersResult`は以下の二つの属性を持つ．
+また`rcl_interfaces::msg::SetParametersResult`は以下の二つの属性を持つ．
 
 * bool successful
   * バラメータ設定の結果(成功か失敗か)
@@ -253,7 +253,7 @@ ParameterDescriptorによってパラメータのプロパティを設定する�
 ```c++
 // In constructor
   ...
-  rcl_interface::msg::ParameterDescriptor descriptor;
+  rcl_interfaces::msg::ParameterDescriptor descriptor;
   descriptor.read_only = true; // set read only
   descriptor.integer_range.resize(1);
   auto& range = descriptor.integer_range.at(0);
@@ -269,7 +269,7 @@ ParameterDescriptorによってパラメータのプロパティを設定する�
 * string name
   * パラメータの名前
 * uint8 type
-  * バラメータの型(使用できる型の一覧は[rcl_interface::msg::ParameterType.msg](https://github.com/ros2/rcl_interfaces/blob/master/rcl_interfaces/msg/ParameterType.msg)を参照のこと)
+  * バラメータの型(使用できる型の一覧は[rcl_interfaces::msg::ParameterType.msg](https://github.com/ros2/rcl_interfaces/blob/master/rcl_interfaces/msg/ParameterType.msg)を参照のこと)
 * string description
   * メモみたいなもの
 string additional_constraints
