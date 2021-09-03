@@ -154,7 +154,7 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 ```
 
 # パッケージ製作時の手順
-## 使用するメッセージ用のパッケージを追加
+## 使用するメッセージを追加する場合
 
 **package.xml**
 
