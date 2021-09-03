@@ -29,14 +29,6 @@ rclcpp_components_register_nodes(<library_name>
 )
 
 # For all <library_name>
-
-ament_export_targets(
-# original
-#   export_${PROJECT_NAME}
-# add HAS_LIBRARY_TARGET to original
-  export_${PROJECT_NAME} HAS_LIBRARY_TARGET
-)
-
 ament_export_dependencies(
   # add dependencies refering to ament_target_dependencies
   # easy way is to copy ament_target_dependencies
@@ -47,6 +39,17 @@ if(NOT WIN32)
     "${ament_cmake_package_templates_ENVIRONMENT_HOOK_LIBRARY_PATH}"
   )
 endif()
+```
+
+Below is not added, is replaced with the existing setting.
+
+```txt
+ament_export_targets(
+# original
+#   export_${PROJECT_NAME}
+# add HAS_LIBRARY_TARGET to original
+  export_${PROJECT_NAME} HAS_LIBRARY_TARGET
+)
 ```
 
 ## Editing header file
