@@ -30,13 +30,6 @@ rclcpp_components_register_nodes(<library_name>
 )
 
 # For all <library_name>
-ament_export_targets(
-# オリジナル
-#   export_${PROJECT_NAME}
-# オリジナルに HAS_LIBRARY_TARGET を追加
-  export_${PROJECT_NAME} HAS_LIBRARY_TARGET
-)
-
 ament_export_dependencies(
   # ament_target_dependenciesを見ながらexportしたいものを追加
   # 簡単な方法はament_target_dependenciesをコピー
@@ -47,6 +40,17 @@ if(NOT WIN32)
     "${ament_cmake_package_templates_ENVIRONMENT_HOOK_LIBRARY_PATH}"
   )
 endif()
+```
+
+以下は既存部分を変更
+
+```txt
+ament_export_targets(
+# オリジナル
+#   export_${PROJECT_NAME}
+# オリジナルに HAS_LIBRARY_TARGET を追加
+  export_${PROJECT_NAME} HAS_LIBRARY_TARGET
+)
 ```
 
 ## ヘッダファイルの編集
