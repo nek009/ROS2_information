@@ -72,8 +72,9 @@ Header becomes as follows.
 
 ```c++
 #include <rclcpp/rclcpp.hpp>
+#include "<package>/visibility_control.h"
 
-namespace \<package> {
+namespace <package> {
 
 class <LIBRARY_NAME> : rclcpp::Node{
 public:
@@ -99,6 +100,7 @@ Notice that `_` is deleted when \<LIBRARY_NAME\> is used as a class name.
 
 ```c++
 #include <rclcpp/rclcpp.hpp>
+#include "test_package/visibility_control.h"
 
 namespace test_package {
 
