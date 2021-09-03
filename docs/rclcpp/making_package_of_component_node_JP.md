@@ -60,7 +60,7 @@ ament_export_targets(
 * コンポーネント用と普通のノード用の使用を考え，複数のコンストラクタを用意
 
 ### 対象を継承クラスに変更
-`--library-name`オプションを使用すると，作成されるクラスは`rclcpp::Node`を継承せず`rclcpp/rclcpp.hpp`をインクルードしないので継承するように変更する．
+`--library-name`オプションを使用すると，作成されるクラスは`public rclcpp::Node`を継承せず`rclcpp/rclcpp.hpp`をインクルードしないので継承するように変更する．
 
 ### マクロの設定
 マクロ `<PACKAGE>_PUBLIC` はvisibility_control.hの中で定義されていて，windowsのために用意されている．
@@ -79,7 +79,8 @@ ament_export_targets(
 
 namespace <package> {
 
-class <LIBRARY_NAME> : rclcpp::Node{
+class <LIBRARY_NAME> : public rclcpp::Node
+{
 public:
   <PACKAGE>_PUBLIC
   <LIBRARY_NAME>( // constructor for component
@@ -107,7 +108,8 @@ private:
 
 namespace test_package {
 
-class TestPackageNode : rclcpp::Node{
+class TestPackageNode : public rclcpp::Node
+{
 public:
   TEST_PACKAGE_PUBLIC
   TestPackageNode( // constructor for component
