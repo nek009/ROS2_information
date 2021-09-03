@@ -43,3 +43,4 @@ ament_export_dependencies(rosidl_default_runtime)
 # Procedure in production
 ## Adding message file
 Add file name in parentheses of `set(msg_files )` or `set(srv_files )` in CMakeLists.txt when making msg or srv files.
+Information of fieldtypes which can be used is written in [About ROS 2 interfaces](https://docs.ros.org/en/foxy/Concepts/About-ROS-Interfaces.html).
