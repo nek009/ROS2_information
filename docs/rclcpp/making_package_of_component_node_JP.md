@@ -21,15 +21,15 @@ $ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcp
 target_compile_defenitionsとinstallの間に記述．
 
 ```txt
-# For <package>
-target_compile_options(<package>
+# For <name>
+target_compile_options(<name>
   PUBLIC -Wall
 )
-rclcpp_components_register_nodes(<package>
+rclcpp_components_register_nodes(<name>
   "namespace::クラス名" # イコール <package> "<package>::<LIBRARY_NAME>"
 )
 
-# For all packages
+# For all <name>
 ament_export_targets(
 # オリジナル
 #   export_${PROJECT_NAME}
@@ -166,7 +166,7 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 ```txt
 find_package(<package_of_message>_msgs REQUIRED)
 
-ament_target_dependencies(<package>
+ament_target_dependencies(<name>
   ...
   <package_of_message>_msgs
 )
@@ -184,10 +184,10 @@ ament_export_dependencies(
 **CMakeLists.txt**
 
 ```text
-target_compile_options(<package>
+target_compile_options(<name>
   PUBLIC -Wall -pthread
 )
-target_link_libraries(<package>
+target_link_libraries(<name>
   pigpiod_if2
 )
 ```
