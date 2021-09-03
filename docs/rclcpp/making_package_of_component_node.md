@@ -59,7 +59,7 @@ ament_export_targets(
 * Prepare plural constructor for a use as component and as normal.
 
 ### Making a class a inheritance of a node class
-A node created by the option `--library-name` is not a inheritance of `rclcpp::Node` and no include file about it, `rclcpp/rclcpp.hpp`.
+A node created by the option `--library-name` is not a inheritance of `public rclcpp::Node` and no include file about it, `rclcpp/rclcpp.hpp`.
 So you must make it inherit the class.
 
 ### Setting macro
@@ -79,7 +79,8 @@ Header becomes as follows.
 
 namespace <package> {
 
-class <LIBRARY_NAME> : rclcpp::Node{
+class <LIBRARY_NAME> : public rclcpp::Node
+{
 public:
   <PACKAGE>_PUBLIC
   <LIBRARY_NAME>( // constructor for component
@@ -107,7 +108,8 @@ Notice that `_` is deleted when \<LIBRARY_NAME\> is used as a class name.
 
 namespace test_package {
 
-class TestPackageNode : rclcpp::Node{
+class TestPackageNode : public rclcpp::Node
+{
 public:
   TEST_PACKAGE_PUBLIC
   TestPackageNode( // constructor for component
