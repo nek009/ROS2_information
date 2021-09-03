@@ -71,8 +71,9 @@ endif()
 
 ```c++
 #include <rclcpp/rclcpp.hpp>
+#include "<package>/visibility_control.h"
 
-namespace \<package> {
+namespace <package> {
 
 class <LIBRARY_NAME> : rclcpp::Node{
 public:
@@ -98,6 +99,7 @@ private:
 
 ```c++
 #include <rclcpp/rclcpp.hpp>
+#include "test_package/visibility_control.h"
 
 namespace test_package {
 
