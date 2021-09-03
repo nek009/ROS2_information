@@ -21,10 +21,10 @@ Describe the parts between target_compile_defenitions and install.
 
 ```txt
 # For <package>
-target_compile_options(<package>
+target_compile_options(<name>
   PUBLIC -Wall
 )
-rclcpp_components_register_nodes(<package>
+rclcpp_components_register_nodes(<name>
   "namespace::classname" # equal <package> "<package>::<LIBRARY_NAME>"
 )
 
@@ -167,7 +167,7 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 ```text
 find_package(<package_of_message>_msgs REQUIRED)
 
-ament_target_dependencies(<package>
+ament_target_dependencies(<name>
   ...
   <package_of_message>_msgs
 )
@@ -185,10 +185,10 @@ Following is an exmaple for adding compile option `-pthread` and linker `-lpigpi
 **CMakeLists.txt**
 
 ```text
-target_compile_options(<package>
+target_compile_options(<name>
   PUBLIC -Wall -pthread
 )
-target_link_libraries(<package>
+target_link_libraries(<name>
   pigpiod_if2
 )
 ```
