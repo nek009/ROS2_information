@@ -17,7 +17,8 @@ $ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcp
 そこで，すでにメッセージ用のパッケージを作成しており名前が確定しているなら，`--dependencies`に追加しておく．
 
 ## CMakeLists.txtの編集
-関係部分のみ抜粋
+関係部分のみ抜粋．<br>
+target_compile_defenitionsとinstallの間に記述．
 
 ```txt
 # For <package>
