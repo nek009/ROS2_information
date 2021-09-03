@@ -20,15 +20,15 @@ Excerpt related parts.<br>
 Describe the parts between target_compile_defenitions and install.
 
 ```txt
-# For <name>
-target_compile_options(<name>
+# For <library_name>
+target_compile_options(<library_name>
   PUBLIC -Wall
 )
-rclcpp_components_register_nodes(<name>
+rclcpp_components_register_nodes(<library_name>
   "namespace::classname" # equal <package> "<package>::<LIBRARY_NAME>"
 )
 
-# For all <name>
+# For all <library_name>
 
 ament_export_targets(
 # original
@@ -167,7 +167,7 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 ```text
 find_package(<package_of_message>_msgs REQUIRED)
 
-ament_target_dependencies(<name>
+ament_target_dependencies(<library_name>
   ...
   <package_of_message>_msgs
 )
@@ -185,10 +185,10 @@ Following is an exmaple for adding compile option `-pthread` and linker `-lpigpi
 **CMakeLists.txt**
 
 ```text
-target_compile_options(<name>
+target_compile_options(<library_name>
   PUBLIC -Wall -pthread
 )
-target_link_libraries(<name>
+target_link_libraries(<library_name>
   pigpiod_if2
 )
 ```
