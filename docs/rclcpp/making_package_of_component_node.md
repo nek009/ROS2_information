@@ -20,7 +20,7 @@ Excerpt related parts.<br>
 Describe the parts between target_compile_defenitions and install.
 
 ```txt
-# For <package>
+# For <name>
 target_compile_options(<name>
   PUBLIC -Wall
 )
@@ -28,7 +28,7 @@ rclcpp_components_register_nodes(<name>
   "namespace::classname" # equal <package> "<package>::<LIBRARY_NAME>"
 )
 
-# For all packages
+# For all <name>
 
 ament_export_targets(
 # original
