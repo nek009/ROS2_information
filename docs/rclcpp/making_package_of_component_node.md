@@ -16,7 +16,8 @@ $ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcp
 Usually ROS2 coding uses messages, that is a significant feature of ROS2, so \<package_of_message\>_msgs is added at `--dependencies` if a package for messages is created and a name of it is fixed.
 
 ## Editing CMakeLists.txt
-Excerpt related parts.
+Excerpt related parts.<br>
+Describe the parts between target_compile_defenitions and install.
 
 ```txt
 # For <package>
