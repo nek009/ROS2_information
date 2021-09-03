@@ -145,7 +145,7 @@ TestPackageNode::TestPackageNode(
 TestPackageNode::TestPackageNode(
   const std::string& name_space,
   const rclcpp::NodeOptions& options
-): Node("test_package_node","",options){
+): Node("test_package_node",name_space,options){
   ...
 }
 ...
