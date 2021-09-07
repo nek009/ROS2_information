@@ -27,7 +27,7 @@ And following terms are used as example.
 1. Declare a variable to keep a service
    * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
 1. Declare a callback function which shows a content of a service
-   * `void handl_srv_(*1,*2);`
+   * `void handle_srv_(*1,*2);`
      * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
      * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
 
