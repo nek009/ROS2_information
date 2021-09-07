@@ -25,7 +25,7 @@
 1. サービスを維持するための変数の宣言
    * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
 1. サービスの中身となるコールバック関数を宣言
-   * `void handl_srv_(*1,*2);`
+   * `void handle_srv_(*1,*2);`
      * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
      * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
 
