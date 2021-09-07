@@ -120,6 +120,9 @@ ParamTestNode::ParamTestNode(
   this->declare_parameter("param7",std::vector<int64_t>(1,0));
   this->declare_parameter("param8",std::vector<double>(4,0.0));
   this->declare_parameter("param9",std::vector<string>(4,""));
+  
+  // Declare, read from yaml if exists and get parameter
+  auto a10 = this->declare_parameter("param10", 20);
 
   using namespace std::placeholders;
   // Register callback function
@@ -127,9 +130,10 @@ ParamTestNode::ParamTestNode(
     std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
   );
   //Use parameter
-  auto a1 = this->get_parameter("param1").as_int();
-  auto a2 = this->get_parameter("param2").as_double();
-  auto a3 = this->get_parameter("param3").as_string();
+  auto a1 = this->get_parameter("param1").as_double();
+  auto a2 = this->get_parameter("param2").as_string();
+  auto a3age = this->get_parameter("param3.age").as_int();
+  auto a3name = this->get_parameter("param3.name").as_string();
   auto a4 = this->get_parameter("param4").as_bool();
   auto a5 = this->get_parameter("param5").as_byte_array();
   auto a6 = this->get_parameter("param6").as_bool_array();
