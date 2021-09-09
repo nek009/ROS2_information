@@ -88,7 +88,7 @@ PubTestNode::PubTestNode(
 
   // Added below
   using namespace std::chrono_literals; // for use of "s", "ms" or "ns"
-  pub_ = this->create_publisher<msg_test_msgs::msg::MsgTest>("msg_test", rclcpp::QoS(KeepAll()));
+  pub_ = this->create_publisher<msg_test_msgs::msg::MsgTest>("msg_test", rclcpp::QoS(rclcpp::KeepAll()));
   timer_ = this->create_wall_timer(
     500ms,
     [this]() ->void {
@@ -173,7 +173,7 @@ PubTestNode::PubTestNode(
 ): Node("srv_test_node","",options){
 
   // Added below
-  pub_ = this->create_publisher<msg_test_msgs::msg::MsgTest>("msg_test",rclcpp::QoS(KeepAll()));
+  pub_ = this->create_publisher<msg_test_msgs::msg::MsgTest>("msg_test",rclcpp::QoS(rclcpp::KeepAll()));
   // Added below
   // following is used in a service or similar parts usually
   auto msg = std::make_shared<msg_test_msgs::msg::MsgTest>();
