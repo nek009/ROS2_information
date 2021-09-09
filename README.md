@@ -29,5 +29,6 @@ Basicall each term encloses in `< >`.
 
 1. [Making package for message](docs/rclcpp/making_package_for_message.md)
 1. [Making package of component node](docs/rclcpp/making_package_of_component_node.md)
+1. [Making package of publisher node](docs/rclcpp/making_package_of_publisher_node.md)
 1. [Making package of service node](docs/rclcpp/making_package_of_service_node.md)
 1. [Using own parameters](docs/rclcpp/using_own_parameters.md)
