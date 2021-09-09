@@ -100,6 +100,11 @@ ParamTestNode::ParamTestNode(
 ): Node("param_test_node","",options){
 
   // Added below
+  using namespace std::placeholders;
+  // Register callback function
+  reset_param_callback_function_handler_ = this->add_on_set_parameters_callback(
+    std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
+  );
   // Use ParameterDescriptor
   rcl_interfaces::msg::ParameterDescriptor descriptor;
   descriptor.read_only = true; // set read only
@@ -116,15 +121,10 @@ ParamTestNode::ParamTestNode(
   this->declare_parameter("param7",std::vector<int64_t>(1,0));
   this->declare_parameter("param8",std::vector<double>(4,0.0));
   this->declare_parameter("param9",std::vector<string>(4,""));
-  
+
   // Declare, read from yaml if exists and get parameter
   auto a10 = this->declare_parameter("param10", 20);
 
-  using namespace std::placeholders;
-  // Register callback function
-  reset_param_callback_function_handler_ = this->add_on_set_parameters_callback(
-    std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
-  );
   //Use parameter
   auto a1 = this->get_parameter("param1").as_double();
   auto a2 = this->get_parameter("param2").as_string();
@@ -235,6 +235,9 @@ The usable member functions of `param` shows in [rclcpp::Parameter in official a
 1. <font color="red">call callback function</font>
 1. execute set_parameters(), or set parameters by console
 1. <font color="red">call callback function</font>
+
+Execution of declare_parameter() or set_parameters() before registering callback function does not call the function, of course.
+So it is better to write registration of callback function at first.
 
 ## ParameterDescriptor
 Properties of parameters can be controled by ParameterDescriptor.

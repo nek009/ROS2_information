@@ -104,6 +104,11 @@ ParamTestNode::ParamTestNode(
 ): Node("param_test_node","",options){
 
   // Added below
+  using namespace std::placeholders;
+  // Register callback function
+  reset_param_callback_function_handler_ = this->add_on_set_parameters_callback(
+    std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
+  );
   // Use ParameterDescriptor
   rcl_interfaces::msg::ParameterDescriptor descriptor;
   descriptor.read_only = true; // set read only
@@ -120,15 +125,10 @@ ParamTestNode::ParamTestNode(
   this->declare_parameter("param7",std::vector<int64_t>(1,0));
   this->declare_parameter("param8",std::vector<double>(4,0.0));
   this->declare_parameter("param9",std::vector<string>(4,""));
-  
+
   // Declare, read from yaml if exists and get parameter
   auto a10 = this->declare_parameter("param10", 20);
 
-  using namespace std::placeholders;
-  // Register callback function
-  reset_param_callback_function_handler_ = this->add_on_set_parameters_callback(
-    std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
-  );
   //Use parameter
   auto a1 = this->get_parameter("param1").as_double();
   auto a2 = this->get_parameter("param2").as_string();
@@ -240,6 +240,9 @@ using OnParametersSetCallbackType =
 1. <font color="red">コールバック関数の呼び出し</font>
 1. set_parameters()やコンソールからのパラメータ設定
 1. <font color="red">コールバック関数の呼び出し</font>
+
+当たり前だけど，コールバック関数を設定する前に実行されたdeclare_parameterなどは，コールバック関数を呼ばない．
+最初にcallback関数を設定し，各種設定をすることをお勧めする．
 
 ## ParameterDescriptor
 ParameterDescriptorによってパラメータのプロパティを設定することができる．
