@@ -25,7 +25,7 @@ target_compile_options(<library_name>
   PUBLIC -Wall
 )
 rclcpp_components_register_nodes(<library_name>
-  "namespace::classname" # equal <package> "<package>::<LIBRARY_NAME>"
+  "namespace::classname" # equal "<package>::<LIBRARY_NAME>"
 )
 
 # For all <library_name>
