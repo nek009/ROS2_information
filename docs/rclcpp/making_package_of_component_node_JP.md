@@ -161,6 +161,7 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 
 # パッケージ製作時の手順
 ## 使用するメッセージを追加する場合
+### package.xmlとCMakeLists.txt
 
 **package.xml**
 
@@ -184,6 +185,69 @@ ament_export_dependencies(
   <package_of_message>_msgs
 )
 ```
+
+### ヘッダやソースファイルでの使用
+メッセージに関連するインクルードファイルを追加し，メッセージを使うためのクラスを利用する．
+
+### 使用例
+以下の使用例で説明する．
+
+* 対象メッセージ
+  * パッケージ名
+    * test_msgs
+  * 型
+    * msg
+  * メッセージ
+    * TestMsg.msg
+      * `test_msgs/msg/TestMsg.msg`
+
+**package.xml**
+
+```xml
+<package format="3">
+  <build>test_msgs</build>
+```
+
+**CMakeLists.txt**
+
+```text
+find_package(test_msgs REQUIRED)
+
+ament_target_dependencies(<library_name>
+  ...
+  test_msgs
+)
+
+ament_export_dependencies(
+  ...
+  test_msgs
+)
+```
+
+**include file**
+
+`#include "test_msgs/msg/test_msg.hpp"`
+
+**class as an usage of message**
+
+`test_msgs::msg::TestMsg` がcreate_publisherで利用できる(もしくはsrvメッセージであればcreate_service)．
+
+### common_interfaces
+`common_interfaces`は共通のインターフェースを含むパッケージとなる．
+
+まず[ros2/common_interfaces on GitHub](https://github.com/ros2/common_interfaces)を見て利用したいメッセージを探してみるとよい．色々そろっていて便利．
+
+ここでpackage.xml, CMakeLists.txt, ヘッダとソースの編集例のために，`Example`セクションで使用した箇条書きに合わせて`common_interfaces/sensor_msgs/msg/BatteryState.msg`を説明してみる．
+
+* 対象メッセージ
+  * パッケージ名
+    * sensor_msgs
+  * 型
+    * msg
+  * メッセージ
+    * BatteryState.msg
+
+簡単に言うと，上のファイルを編集時に`common_interfaces`の情報は使用しない．
 
 ## コンパイルオプションやリンカーの設定
 `target_compile_options`や`target_link_libraries`を使って設定する．

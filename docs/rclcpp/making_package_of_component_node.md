@@ -161,6 +161,7 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 
 # Procedure in production
 ## Adding a package for messages
+### package.xml and CMakeLists.txt
 
 **package.xml**
 
@@ -184,6 +185,70 @@ ament_export_dependencies(
   <package_of_message>_msgs
 )
 ```
+
+### Header and source files
+Add include files related to messages to header or source files.
+And use message as class.
+
+### Example
+Bellow is example.
+
+* target message
+  * package name
+    * test_msgs
+  * type
+    * msg
+  * message
+    * TestMsg.msg
+      * `test_msgs/msg/TestMsg.msg`
+
+**package.xml**
+
+```xml
+<package format="3">
+  <build>test_msgs</build>
+```
+
+**CMakeLists.txt**
+
+```text
+find_package(test_msgs REQUIRED)
+
+ament_target_dependencies(<library_name>
+  ...
+  test_msgs
+)
+
+ament_export_dependencies(
+  ...
+  test_msgs
+)
+```
+
+**include file**
+
+`#include "test_msgs/msg/test_msg.hpp"`
+
+**class as an usage of message**
+
+`test_msgs::msg::TestMsg` can be used in create_publisher(or create_service if it is srv message.)
+
+### common_interfaces
+`common_interfaces` is a set of packages which contain common interface files.
+
+See [ros2/common_interfaces on GitHub](https://github.com/ros2/common_interfaces) and search interfaces what you want to use.
+
+Here, you want to use `common_interfaces/sensor_msgs/msg/BatteryState.msg`, editing of package.xml, CMakeLists.txt, header and source file is done based on following factors explained in `Example` section.
+
+* target message
+  * package name
+    * sensor_msgs
+  * type
+    * msg
+  * message
+    * BatteryState.msg
+
+That means `common_interfaces` isn't needed to edit these files.
 
 ## Adding compile options or linker
 Use `target_compile_options` or `target_link_libraries` to add them.
