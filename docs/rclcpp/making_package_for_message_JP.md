@@ -6,7 +6,7 @@
 ```shell
 $ colcon_cd
 $ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake
+$ ros2 pkg create <package> --build-type ament_cmake --license Apache-2.0
 $ mkdir <package>/msg
 $ mkdir <package>/srv
 ```
