@@ -10,7 +10,7 @@ And I use it as a usual node, a shared library or a component node depending on 
 ```shell
 $ colcon_cd
 $ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_msgs --library-name <node_name>
+$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_msgs --library-name <node_name> --license Apache-2.0
 ```
 
 Usually ROS2 coding uses messages, that is a significant feature of ROS2, so \<package_of_message\>_msgs is added at `--dependencies` if a package for messages is created and a name of it is fixed.
