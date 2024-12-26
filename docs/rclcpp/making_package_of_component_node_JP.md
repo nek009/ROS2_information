@@ -10,7 +10,7 @@
 ```shell
 $ colcon_cd
 $ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_msgs --library-name <node_name>
+$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_msgs --library-name <node_name> --license Apache-2.0
 ```
 
 通常メッセージはROS2の重要な特徴なのでコーディングで使用する．
