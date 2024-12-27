@@ -10,7 +10,7 @@
 ```shell
 $ colcon_cd
 $ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_msgs --library-name <node_name> --license Apache-2.0
+$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_interfaces --library-name <node_name> --license Apache-2.0
 ```
 
 通常メッセージはROS2の重要な特徴なのでコーディングで使用する．
@@ -167,22 +167,22 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 
 ```xml
 <package format="3">
-  <build><package_of_message>_msgs</build>
+  <build><package_of_message>_interfaces</build>
 ```
 
 **CMakeLists.txt**
 
 ```txt
-find_package(<package_of_message>_msgs REQUIRED)
+find_package(<package_of_message>_interfaces REQUIRED)
 
 ament_target_dependencies(<library_name>
   ...
-  <package_of_message>_msgs
+  <package_of_message>_interfaces
 )
 
 ament_export_dependencies(
   ...
-  <package_of_message>_msgs
+  <package_of_message>_interfaces
 )
 ```
 
@@ -194,43 +194,43 @@ ament_export_dependencies(
 
 * 対象メッセージ
   * パッケージ名
-    * test_msgs
+    * test_interfaces
   * 型
     * msg
   * メッセージ
     * TestMsg.msg
-      * `test_msgs/msg/TestMsg.msg`
+      * `test_interfaces/msg/TestMsg.msg`
 
 **package.xml**
 
 ```xml
 <package format="3">
-  <build>test_msgs</build>
+  <build>test_interfaces</build>
 ```
 
 **CMakeLists.txt**
 
 ```text
-find_package(test_msgs REQUIRED)
+find_package(test_interfaces REQUIRED)
 
 ament_target_dependencies(<library_name>
   ...
-  test_msgs
+  test_interfaces
 )
 
 ament_export_dependencies(
   ...
-  test_msgs
+  test_interfaces
 )
 ```
 
 **include file**
 
-`#include "test_msgs/msg/test_msg.hpp"`
+`#include "test_interfaces/msg/test_msg.hpp"`
 
 **class as an usage of message**
 
-`test_msgs::msg::TestMsg` がcreate_publisherで利用できる(もしくはsrvメッセージであればcreate_service)．
+`test_interfaces::msg::TestMsg` がcreate_publisherで利用できる(もしくはsrvメッセージであればcreate_service)．
 
 ### common_interfaces
 `common_interfaces`は共通のインターフェースを含むパッケージとなる．
