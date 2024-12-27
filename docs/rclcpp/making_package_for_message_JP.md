@@ -43,4 +43,4 @@ ament_export_dependencies(rosidl_default_runtime)
 # パッケージ製作時の手順
 ## メッセージファイルの追加
 msgファイルやsrvファイルを作成したらCMakeLists.txt中の`set(msg_files )`や`set(srv_files )`の中にファイル名を追加．
-使用できる型は[About ROS 2 interfaces](https://docs.ros.org/en/foxy/Concepts/About-ROS-Interfaces.html)を参照のこと．
+使用できる型は[About ROS 2 interfaces](https://docs.ros.org/en/jazzy/Concepts/About-ROS-Interfaces.html)を参照のこと．
