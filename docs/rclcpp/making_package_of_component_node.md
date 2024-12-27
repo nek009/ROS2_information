@@ -10,10 +10,10 @@ And I use it as a usual node, a shared library or a component node depending on 
 ```shell
 $ colcon_cd
 $ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_msgs --library-name <node_name> --license Apache-2.0
+$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_interfaces --library-name <node_name> --license Apache-2.0
 ```
 
-Usually ROS2 coding uses messages, that is a significant feature of ROS2, so \<package_of_message\>_msgs is added at `--dependencies` if a package for messages is created and a name of it is fixed.
+Usually ROS2 coding uses messages, that is a significant feature of ROS2, so \<package_of_message\>_interfaces is added at `--dependencies` if a package for messages is created and a name of it is fixed.
 
 ## Editing CMakeLists.txt
 Excerpt related parts.<br>
@@ -167,22 +167,22 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 
 ```xml
 <package format="3">
-  <build><package_of_message>_msgs</build>
+  <build><package_of_message>_interfaces</build>
 ```
 
 **CMakeLists.txt**
 
 ```text
-find_package(<package_of_message>_msgs REQUIRED)
+find_package(<package_of_message>_interfaces REQUIRED)
 
 ament_target_dependencies(<library_name>
   ...
-  <package_of_message>_msgs
+  <package_of_message>_interfaces
 )
 
 ament_export_dependencies(
   ...
-  <package_of_message>_msgs
+  <package_of_message>_interfaces
 )
 ```
 
@@ -195,43 +195,43 @@ Bellow is example.
 
 * target message
   * package name
-    * test_msgs
+    * test_interfaces
   * type
     * msg
   * message
     * TestMsg.msg
-      * `test_msgs/msg/TestMsg.msg`
+      * `test_interfaces/msg/TestMsg.msg`
 
 **package.xml**
 
 ```xml
 <package format="3">
-  <build>test_msgs</build>
+  <build>test_interfaces</build>
 ```
 
 **CMakeLists.txt**
 
 ```text
-find_package(test_msgs REQUIRED)
+find_package(test_interfaces REQUIRED)
 
 ament_target_dependencies(<library_name>
   ...
-  test_msgs
+  test_interfaces
 )
 
 ament_export_dependencies(
   ...
-  test_msgs
+  test_interfaces
 )
 ```
 
 **include file**
 
-`#include "test_msgs/msg/test_msg.hpp"`
+`#include "test_interfaces/msg/test_msg.hpp"`
 
 **class as an usage of message**
 
-`test_msgs::msg::TestMsg` can be used in create_publisher(or create_service if it is srv message.)
+`test_interfaces::msg::TestMsg` can be used in create_publisher(or create_service if it is srv message.)
 
 ### common_interfaces
 `common_interfaces` is a set of packages which contain common interface files.
