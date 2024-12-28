@@ -76,9 +76,8 @@ public:
 ```
 
 ```c++
-#include <rclcpp/rclcpp.hpp>
-#include "rclcpp_components/register_node_macro.hpp"
 #include "srv_pkg/srv_test_node.hpp"
+#include "rclcpp_components/register_node_macro.hpp"
 // Added below
 #include "msg_test_interfaces/srv/msg_test.hpp"
 
