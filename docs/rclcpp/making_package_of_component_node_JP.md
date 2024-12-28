@@ -23,8 +23,8 @@ target_compile_defenitionsとinstallの間に記述．
 ```txt
 # For <library_name>
 # 念の為SHAREDを追加しておく．
-# add_library(<library_name> SHARED src/<file_name>)
 # と思ったがsharedいらないかもしれない．書き換え不要かも．
+# add_library(<library_name> SHARED src/<file_name>)
 target_compile_options(<library_name>
   PUBLIC -Wall
 )
