@@ -10,8 +10,8 @@
   * srv_pkg
 * 対象クラス(\<NODE_NAME\>)
   * SrvTestNode
-* 使用メッセージ(\<package\>_msgs/srv/\<srv file\>)
-  * msg_test_msgs/srv/MsgTest.srv
+* 使用メッセージ(\<package\>_interfaces/srv/\<srv file\>)
+  * msg_test_interfaces/srv/MsgTest.srv
     * `int a`
     * `---`
     * `int b`
@@ -21,20 +21,20 @@
 **In hpp files**
 
 1. メッセージに関するヘッダファイルをインクルード
-   * `#include "mgs_test_msgs/srv/msg_test.hpp"`
+   * `#include "mgs_test_interfaces/srv/msg_test.hpp"`
 1. サービスを維持するための変数の宣言
-   * `rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;`
+   * `rclcpp::Service<msg_test_interfaces::srv::MsgTest>::SharedPtr srv_;`
 1. サービスの中身となるコールバック関数を宣言
    * `void handle_srv_(*1,*2);`
-     * *1: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> req
-     * *2: const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> res
+     * *1: const std::shared_ptr<msg_test_interfaces::srv::MsgTest::Request> req
+     * *2: const std::shared_ptr<msg_test_interfaces::srv::MsgTest::Response> res
 
 **In cpp files**
 
 1. このクラス・使用メッセージのヘッダファイルのインクルード
 1. コールバック関数の実装
 1. サービス名とコールバック関数の登録
-   * `srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(<service name>, a function);`
+   * `srv_ = this->create_service<msg_test_interfaces::srv::MsgTest>(<service name>, a function);`
 
 ## コーディング例
 追加したところに`// Added below`のコメントを追加しているので参考に．
@@ -42,18 +42,18 @@
 ```c++
 #include <rclcpp/rclcpp.hpp>
 // Added below
-#include "msg_test_msgs/srv/msg_test.hpp"
+#include "msg_test_interfaces/srv/msg_test.hpp"
 
 namespace srv_pkg{
 
 class SrvTestNode : public rclcpp::Node{
 private:
   // Added below
-  rclcpp::Service<msg_test_msgs::srv::MsgTest>::SharedPtr srv_;
+  rclcpp::Service<msg_test_interfaces::srv::MsgTest>::SharedPtr srv_;
   // Added below
   void handle_srv_(
-    const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> request,
-    const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> response
+    const std::shared_ptr<msg_test_interfaces::srv::MsgTest::Request> request,
+    const std::shared_ptr<msg_test_interfaces::srv::MsgTest::Response> response
   );
 
 public:
@@ -78,14 +78,14 @@ public:
 #include "rclcpp_components/register_node_macro.hpp"
 #include "srv_pkg/srv_test_node.hpp"
 // Added below
-#include "msg_test_msgs/srv/msg_test.hpp"
+#include "msg_test_interfaces/srv/msg_test.hpp"
 
 namespace srv_pkg{
 
 // Added below
 void SrvTestNode::handle_srv_(
-  const std::shared_ptr<msg_test_msgs::srv::MsgTest::Request> request,
-  const std::shared_ptr<msg_test_msgs::srv::MsgTest::Response> response
+  const std::shared_ptr<msg_test_interfaces::srv::MsgTest::Request> request,
+  const std::shared_ptr<msg_test_interfaces::srv::MsgTest::Response> response
 ){
   // basic access to a message
   int a = request->a;
@@ -103,7 +103,7 @@ SrvTestNode::SrvTestNode(
 
   // Added below
   using namespace std::placeholders;
-  srv_ = this->create_service<msg_test_msgs::srv::MsgTest>(
+  srv_ = this->create_service<msg_test_interfaces::srv::MsgTest>(
     "srv_test", // service name
     std::bind(&SrvTestNode::handle_srv_, this, _1, _2)
   );
