@@ -13,16 +13,17 @@ I explain terms or names of them roughly at each part, or there are few explanat
 ## Flow of making a code for a parameter node
 
 **In hpp files**
-1. Declare callback function(s) for changes of parameters
+1. Declare callback functions for changes of parameters
    * No need if lambda functions are used.
    * No need if no special procedures for changes of parameters
+1. Declare handler for callback functions
 
 **In cpp files**
 
 1. Use ParameterDescriptor
    * For detailed setting of parameters. No need if no detailed setting.
 1. Declare parameters
-1. Define callback function(s) for changes of parameters
+1. Define callback functions for changes of parameters
    * No need if no special procedures for changes of parameters
 1. Use Parameter
 
@@ -62,9 +63,12 @@ namespace param_pkg{
 class ParamTestNode : public rclcpp::Node{
 private:
   // Added below
-  OnSetParametersCallbackHandle::SharedPtr reset_param_callback_function_handler_;
-  rcl_interfaces::msg::SetParametersResult
-    reset_param_callback_function_(const std::vector<rclcpp::Parameter>& params);
+  rclcpp::node_interfaces::PreSetParametersCallbackHandle::SharedPtr
+    pre_set_parameters_callback_handle_;
+  rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr
+    on_set_parameters_callback_handle_;
+  rclcpp::node_interfaces::PostSetParametersCallbackHandle::SharedPtr
+    post_set_parameters_callback_handle_;
 
 public:
   PARAM_PKG_PUBLIC
@@ -101,6 +105,65 @@ ParamTestNode::ParamTestNode(
 
   // Added below
   using namespace std::placeholders;
+  // Define callback function by lambda
+  auto modify_params_callback =
+    [](std::vector<rclcpp::Parameter>& parameters){
+      for(auto & param : parameters){
+        if(param.get_name()=="param1"){
+          std::cout << param.get_name() << ":" << param.as_int() << std::endl;
+          parameters.push_back(rclcpp::Parameter("param2", 4.0));
+        }
+      }
+    };
+  pre_set_parameters_callback_handle_ = this->add_pre_set_parameters_callback(
+    modify_params_callback);
+
+  auto validate_upcoming_parameters_callback =
+    [](const std::vector<rclcpp::Parameter>& parameters) {
+      rcl_interfaces::msg::SetParametersResult result;
+      result.successful = true;
+
+      for (const auto & param : parameters) {
+        // As an example: no parameters are changed if a value > 5.0 is specified for 'param1',
+        // or a value < -5.0 for 'param2'.
+        if (param.get_name() == "param1") {
+          if (param.get_value<double>() > 5.0) {
+            result.successful = false;
+            result.reason = "cannot set 'param1' > 5.0";
+            break;
+          }
+        } else if (param.get_name() == "param2") {
+          if (param.get_value<double>() < -5.0) {
+            result.successful = false;
+            result.reason = "cannot set 'param2' < -5.0";
+            break;
+          }
+        }
+      }
+
+      return result;
+    };
+  on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(
+    validate_upcoming_parameters_callback);
+
+  auto react_to_updated_parameters_callback =
+    [this](const std::vector<rclcpp::Parameter> & parameters) {
+      for (const auto & param : parameters) {
+        if (param.get_name() == "param1") {
+          value_1_ = param.get_value<double>();
+          RCLCPP_INFO(get_logger(), "Member variable 'value_1_' set to: %f.", value_1_);
+        }
+        if (param.get_name() == "param2") {
+          value_2_ = param.get_value<double>();
+          RCLCPP_INFO(get_logger(), "Member variable 'value_2_' set to: %f.", value_2_);
+        }
+      }
+    };
+  post_set_parameters_callback_handle_ = this->add_post_set_parameters_callback(
+    react_to_updated_parameters_callback);
+
+
+
   // Register callback function
   reset_param_callback_function_handler_ = this->add_on_set_parameters_callback(
     std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
