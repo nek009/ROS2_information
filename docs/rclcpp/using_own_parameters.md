@@ -49,7 +49,7 @@ $ ros2 run <package name> <target name> --ros-args --params-file <yaml file>
 * add_on_set_parameters_callback
 * remove_on_set_parameters_callback
 
-Detailed Information is in [Official api reference](https://docs.ros2.org/foxy/api/rclcpp/index.html).
+Detailed Information is in [Official api reference](https://docs.ros.org/en/jazzy/p/rclcpp/index.html).
 
 ## Example of coding
 Added comments `// Added below` at the point to be noticed.
