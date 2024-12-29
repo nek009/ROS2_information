@@ -168,11 +168,6 @@ ParamTestNode::ParamTestNode(
   post_set_parameters_callback_handle_ = this->add_post_set_parameters_callback(
     react_to_updated_parameters_callback);
 
-
-  // Register callback function
-  reset_param_callback_function_handler_ = this->add_on_set_parameters_callback(
-    std::bind(&ParamTestNode::reset_param_callback_function_, this, _1)
-  );
   // Use ParameterDescriptor
   rcl_interfaces::msg::ParameterDescriptor descriptor;
   descriptor.read_only = true; // set read only
@@ -210,29 +205,6 @@ ParamTestNode::ParamTestNode(
   });
 }
 
-// Added below
-// Define callback function
-rcl_interfaces::msg::SetParametersResult
-ParamTestNode::reset_param_callback_function_(const std::vector<rclcpp::Parameter>& params){
-  auto results = std::make_shared<rcl_interfaces::msg::SetParametersResult>();
-  results->successful = true;
-  results->reason="";
-
-  for(auto&& param : params){
-    // recogize param, process it.
-    if(param.get_name() == "param1"){
-      auto tmp = param.as_double();
-      // process something what you want.
-    }else if(param.get_name() == "param2"){
-      if(/* something to be wrong */){
-        results->successful = false;
-        results->reason = "hogehoge was hoihoi.";
-        return *results;
-      }
-    }...
-  }
-  return *results;
-}
 ...
 
 } // end of namespace
