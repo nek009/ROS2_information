@@ -53,7 +53,7 @@ $ ros2 run <package name> <target name> --ros-args --params-file <yaml file>
 * add_on_set_parameters_callback
 * remove_on_set_parameters_callback
 
-詳細な情報は[公式のapi reference](https://docs.ros2.org/foxy/api/rclcpp/index.html)を参照のこと．
+詳細な情報は[公式のapi reference](https://docs.ros.org/en/jazzy/p/rclcpp/index.html)を参照のこと．
 
 ## コーディング例
 追加したところに`// Added below`のコメントを追加しているので参考に．
