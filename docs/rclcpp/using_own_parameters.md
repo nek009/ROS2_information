@@ -10,7 +10,7 @@ So refering [making_package_of_component_node.md](making_package_of_service_node
 Several parameters are made as example.
 I explain terms or names of them roughly at each part, or there are few explanations.
 
-## Flow of making a code for a service
+## Flow of making a code for a parameter node
 
 **In hpp files**
 1. Declare callback function(s) for changes of parameters
