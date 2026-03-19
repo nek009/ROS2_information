@@ -10,28 +10,49 @@ And I use it as a usual node, a shared library or a component node depending on 
 ```shell
 $ colcon_cd
 $ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_interfaces --library-name <node_name> --license Apache-2.0
+$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components  <package_for_message> --library-name <node_name> --license Apache-2.0
 ```
 
-Usually ROS2 coding uses messages, that is a significant feature of ROS2, so \<package_of_message\>_interfaces is added at `--dependencies` if a package for messages is created and a name of it is fixed.
+Usually ROS2 coding uses messages, that is a significant feature of ROS2, so \<package_for_message\> is added at `--dependencies` if a package for messages is created and a name of it is fixed.
 
 ## Editing CMakeLists.txt
 Excerpt related parts.<br>
 Describe the parts between target_compile_defenitions and install.
 
 ```txt
-# For <library_name>
+# For brary
+add_library(<library_name>
+  src/<file_name>
+)
+
+# For common
 target_compile_options(<library_name>
   PUBLIC -Wall
 )
+target_link_libraries(<library_name> PUBLIC
+  rclcpp::rclcpp
+  rclcpp_components::component
+  ${package_for_message>_TARGETS}
+)
+
+
+# For component
 rclcpp_components_register_nodes(<library_name>
   "namespace::classname" # equal "<package>::<LIBRARY_NAME>"
 )
 
-# For all <library_name>
+# For library
 ament_export_dependencies(
-  # add dependencies refering to ament_target_dependencies
-  # easy way is to copy ament_target_dependencies
+  # add dependencies refering to target_link_libraries
+  # easy way is to copy target_link_libraries
+)
+ament_export_targets(export_${PROJECT_NAME})
+install(TARGETS
+  <library_name>
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
 )
 
 if(NOT WIN32)
@@ -41,21 +62,11 @@ if(NOT WIN32)
 endif()
 ```
 
-Below is not added, is replaced with the existing setting.
-
-```txt
-ament_export_targets(
-# original
-#   export_${PROJECT_NAME}
-# add HAS_LIBRARY_TARGET to original
-  export_${PROJECT_NAME} HAS_LIBRARY_TARGET
-)
-```
-
 ## Editing header file
 ### Outline
 * Inherit `rclcpp::Node`
 * Set macro `<PACKAGE>_PUBLIC` for all symbols you want to export.
+  * Under the case by compiling on Windows, not need it on ubuntu.
 * Prepare plural constructor for a use as component and as normal.
 
 ### Making a class a inheritance of a node class
@@ -167,22 +178,22 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 
 ```xml
 <package format="3">
-  <build><package_of_message>_interfaces</build>
+  <build><package_for_message></build>
 ```
 
 **CMakeLists.txt**
 
 ```text
-find_package(<package_of_message>_interfaces REQUIRED)
+find_package(<package_for_message> REQUIRED)
 
-ament_target_dependencies(<library_name>
+target_link_libraries(<library_name>
   ...
   <package_of_message>_interfaces
 )
 
 ament_export_dependencies(
   ...
-  <package_of_message>_interfaces
+  ${<package_of_message>_TARGETS}
 )
 ```
 
