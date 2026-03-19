@@ -1,7 +1,7 @@
 [Topページへ](../../README_JP.md)
 
 ここではserviceノードを作成する方法を紹介する．
-コンポーネントに追加する形で説明しているので，[making_package_of_component_node.md](making_package_of_service_node.md)を見てコンポーネントノードを作成しておくこと．
+コンポーネントに追加する形で説明しているので，[making_package_of_component_node.md](making_package_of_component_node_JP.md)を見てコンポーネントノードを作成しておくこと．またpackage.xmlやCMakeLists.txtの設定もそちらを参照のこと．
 
 # 初期手順
 以下の名前を例として用いる．
