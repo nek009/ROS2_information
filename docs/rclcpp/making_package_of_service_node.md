@@ -2,7 +2,7 @@
 
 Here, a ways of making a service node is shown.
 A component node is used for making a service node.
-So it shuld be made by refering [making_package_of_component_node.md](making_package_of_service_node.md).
+So it shuld be made by refering [making_package_of_component_node.md](making_package_of_component_node.md).
 
 # Initial procedure
 I assume a component node is already created.
