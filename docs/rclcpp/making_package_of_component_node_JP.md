@@ -10,32 +10,51 @@
 ```shell
 $ colcon_cd
 $ cd <ws>
-$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_of_message>_interfaces --library-name <node_name> --license Apache-2.0
+$ ros2 pkg create <package> --build-type ament_cmake --dependencies rclcpp rclcpp_components <package_for_message> --library-name <node_name> --license Apache-2.0
 ```
 
 通常メッセージはROS2の重要な特徴なのでコーディングで使用する．
-そこで，すでにメッセージ用のパッケージを作成しており名前が確定しているなら，`--dependencies`に追加しておく．
+そこで，すでにメッセージ用のパッケージを作成しており名前が確定しているなら，`--dependencies`に <package_for_message>のように追加しておく．
 
 ## CMakeLists.txtの編集
 関係部分のみ抜粋．<br>
 target_compile_defenitionsとinstallの間に記述．
 
 ```txt
-# For <library_name>
+# For library
 # 念の為SHAREDを追加しておく．
 # と思ったがsharedいらないかもしれない．書き換え不要かも．
-# add_library(<library_name> SHARED src/<file_name>)
+add_library(<library_name>
+  src/<file_name>
+)
+
+# For common
 target_compile_options(<library_name>
   PUBLIC -Wall
 )
+target_link_libraries(<library_name> PUBLIC
+  rclcpp::rclcpp
+  rclcpp_components::component
+  ${package_for_message>_TARGETS}
+)
+
+# For component
 rclcpp_components_register_nodes(<library_name>
   "namespace::クラス名" # イコール "<package>::<LIBRARY_NAME>"
 )
 
-# For all <library_name>
+# For library
 ament_export_dependencies(
-  # ament_target_dependenciesを見ながらexportしたいものを追加
+  # target_link_librariesを見ながらexportしたいものを追加
   # 簡単な方法はament_target_dependenciesをコピー
+)
+ament_export_targets(export_${PROJECT_NAME})
+install(TARGETS
+  <library_name>
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
 )
 
 if(NOT WIN32)
@@ -45,21 +64,11 @@ if(NOT WIN32)
 endif()
 ```
 
-以下は既存部分を変更
-ただしjazzyのページではHAS_...がいらない形で説明している．いらなくなったのかもしれない．
-```txt
-ament_export_targets(
-# オリジナル
-#   export_${PROJECT_NAME}
-# オリジナルに HAS_LIBRARY_TARGET を追加
-  export_${PROJECT_NAME} HAS_LIBRARY_TARGET
-)
-```
-
 ## ヘッダファイルの編集
 ### 概要
 * `rclcpp::Node`クラスの継承
 * 外部公開用にマクロ`<PACKAGE>_PUBLIC`の設定
+  * Windowsでのコンパイル時のみ．ubuntuではいらない？
 * コンポーネント用と普通のノード用の使用を考え，複数のコンストラクタを用意
 
 ### 対象を継承クラスに変更
@@ -170,17 +179,17 @@ RCLCPP_COMPONENTS_REGISTER_NODE(test_package::TestPackageNode)
 
 ```xml
 <package format="3">
-  <build><package_of_message>_interfaces</build>
+  <build><package_for_message></build>
 ```
 
 **CMakeLists.txt**
 
 ```txt
-find_package(<package_of_message>_interfaces REQUIRED)
+find_package(<package_for_message> REQUIRED)
 
-ament_target_dependencies(<library_name>
+target_link_libraries(<library_name>
   ...
-  <package_of_message>_interfaces
+  ${<package_of_message>_TARGETS}
 )
 
 ament_export_dependencies(
