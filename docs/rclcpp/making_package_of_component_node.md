@@ -32,7 +32,7 @@ target_compile_options(<library_name>
 target_link_libraries(<library_name> PUBLIC
   rclcpp::rclcpp
   rclcpp_components::component
-  ${package_for_message>_TARGETS}
+  ${<package_for_message>_TARGETS}
 )
 
 
